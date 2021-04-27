@@ -114,7 +114,7 @@ public:
     static void hexStrToBytes(string &hex, char *outBytes);
 
 private:
-    ll m_mag[INT_NUMBER_LEN]{};
+    ll m_mag[INT_NUMBER_LEN];
 
     int m_bitLen;
 
