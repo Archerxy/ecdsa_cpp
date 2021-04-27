@@ -12,7 +12,7 @@ void ecdsaCompareAndTest() {
     string priKeyHex = "43EFA45ABDA29F5E4A7FEFABC3DACF7ACFF4EAAF861AF5DFFF3AD1F6543F3ACA";
     string hashStr = "FAE432CE3DDAFCE3457FEFABC3DACF7ACFF4EAAF861AF5DFFF3AFACEB56D4AA4";
 
-    clock_t t0, t1, t2, t3;
+    clock_t t0, t1, t2, t3, t4, t5;
 
     t0 = clock();
     string sig = EcdsaBigInt::sign(priKeyHex, hashStr);
