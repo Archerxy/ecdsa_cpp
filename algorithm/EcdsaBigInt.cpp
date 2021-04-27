@@ -173,9 +173,9 @@ void fastMultiply_copy(BigInt &a0, BigInt &a1, BigInt &a2, BigInt &k,
         return v == 0 ? "00" : "01";
     }
 
-    const char *
-    concatBytes(const char *a, int al, const char *b, int bl, const char *c, int cl, const char *d, int dl) {
-        char *out = static_cast<char *>(malloc(sizeof(char) * (al + bl + cl + dl)));
+    void concatBytes(const char *a, int al, const char *b, int bl, 
+                             const char *c, int cl, const char *d, int dl,
+                             char *out) {
         for (int i = 0; i < al; ++i)
             out[i] = a[i];
         for (int i = al; i < al + bl; ++i)
@@ -184,7 +184,6 @@ void fastMultiply_copy(BigInt &a0, BigInt &a1, BigInt &a2, BigInt &k,
             out[i] = c[i - al - bl];
         for (int i = al + bl + cl; i < al + bl + cl + dl; ++i)
             out[i] = d[i - al - bl - cl];
-        return out;
     }
 
     string sign(string &privateKeyHex, string &hashHex) {
@@ -195,9 +194,13 @@ void fastMultiply_copy(BigInt &a0, BigInt &a1, BigInt &a2, BigInt &k,
         BigInt::hexStrToBytes(privateKeyHex, privateKey);
         char hash[32];
         BigInt::hexStrToBytes(hashHex, hash);
-        const char *k1 = Hmac::sha256(k0, 32, concatBytes(v0, 32, &char0, 1, privateKey, 32, hash, 32), 97);
+        char k1_in[32 + 1 + 32 + 32];
+        concatBytes(v0, 32, &char0, 1, privateKey, 32, hash, 32, k1_in);
+        const char *k1 = Hmac::sha256(k0, 32, k1_in, 97);
         const char *v1 = Hmac::sha256(k1, 32, v0, 32);
-        const char *k2 = Hmac::sha256(k1, 32, concatBytes(v1, 32, &char1, 1, privateKey, 32, hash, 32), 97);
+        char k2_in[32 + 1 + 32 + 32];
+        concatBytes(v1, 32, &char1, 1, privateKey, 32, hash, 32, k2_in);
+        const char *k2 = Hmac::sha256(k1, 32, k2_in, 97);
         const char *v2 = Hmac::sha256(k2, 32, v1, 32);
         const char *kv = Hmac::sha256(k2, 32, v2, 32);
 
