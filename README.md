@@ -1,9 +1,3 @@
-# ecdsa_cpp
-## Overview
-    This is a implementation of the Elliptic Curve Digital Signature Algorithm using gmp library.
-## Examples
-    see the test.c
-## Supported  Elliptic Curves
-    secp256k1, sm2p256v1
-## Reference
-    https://www.secg.org/sec2-v2.pdf
+# Notice
+The current repository is no longer maintained.
+For related algorithm implementations, please refer to [elliptic_curves](https://github.com/Archerxy/elliptic_curves/tree/main/algorithm), which is implemented in C language for elliptic curve operations and provides a Java interface.
